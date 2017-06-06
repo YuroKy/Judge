@@ -1,0 +1,30 @@
+﻿<Window x:Class="JudgeTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JudgeTool"
+        mc:Ignorable="d"
+        Title="Judge Tool" Height="350" Width="1015.75">
+    <Grid>
+        <ComboBox x:Name="choseList" HorizontalAlignment="Left" Margin="23,277,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="CPP" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="Pascal" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="CSharp" HorizontalAlignment="Left" Width="118"/>
+            <ComboBoxItem Content="Python" HorizontalAlignment="Left" Width="118"/>
+
+        </ComboBox>
+        <Button x:Name="start" Content="Тестувати" HorizontalAlignment="Left" Margin="200,277,0,0" VerticalAlignment="Top" Width="75" Height="22" Click="Button_Click"/>
+        <RichTextBox x:Name="content" HorizontalAlignment="Left" Height="241" Margin="23,23,0,0" VerticalAlignment="Top" Width="474" FontFamily="Consolas" UndoLimit="300" FontSize="11">
+            <FlowDocument>
+                <Paragraph>
+                    <Run/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <ListBox x:Name="resultList" HorizontalAlignment="Left" Height="241" Margin="527,23,0,0" VerticalAlignment="Top" Width="454"/>
+        <TextBlock HorizontalAlignment="Left" Margin="23,2,0,0" TextWrapping="Wrap" Text="Поле для коду" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="527,5,0,0" TextWrapping="Wrap" Text="Результати тестування" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
