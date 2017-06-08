@@ -31,7 +31,7 @@ namespace Judge
             _submit = submit;
         }
 
-        public IEnumerable<TestVerdict> Assessment(string pathToSolve, Problem problem, ExecuteConfiguration configuration)
+        public void Assessment(string pathToSolve, Problem problem, ExecuteConfiguration configuration)
         {
 
             foreach (var solve in problem.Tests)
@@ -49,7 +49,7 @@ namespace Judge
                         testVerdict.UpdateVerdict("WA");
                 }
                 _protocol.Results.Add(solve, testVerdict);
-                yield return testVerdict;
+
             }
         }
 
@@ -59,16 +59,12 @@ namespace Judge
             builder.Create(_submit.SourceLanguage, _factory, _submit.SourceCode);
             _protocol.Submit = _submit;
             _protocol.CompilationResult = builder.CompilationResult;
-            int magic = 0;
+
             if (_protocol.CompilationResult.ExitCode == 0)
-            {
-                foreach (var result in Assessment(_protocol.CompilationResult.Result != "INTERPRETER" ? builder.Path + ".exe" : builder.Path, _problem, builder.GetExecuteConfiguration()))
-                    magic++;
-            }
+                Assessment(_protocol.CompilationResult.Result != "INTERPRETER" ? builder.Path + ".exe" : builder.Path, _problem, builder.GetExecuteConfiguration());
             else
-            {
-                Console.WriteLine("Build Error");
-            }
+                Logger.Logger.Log.Info("Build Error");
+
             return _protocol;
         }
     }
