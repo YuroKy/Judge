@@ -62,8 +62,8 @@ namespace Judge
             int magic = 0;
             if (_protocol.CompilationResult.ExitCode == 0)
             {
-                foreach (var result in Assessment(builder.Path + ".exe", _problem, builder.GetExecuteConfiguration()))
-                   magic++;
+                foreach (var result in Assessment(_protocol.CompilationResult.Result != "INTERPRETER" ? builder.Path + ".exe" : builder.Path, _problem, builder.GetExecuteConfiguration()))
+                    magic++;
             }
             else
             {

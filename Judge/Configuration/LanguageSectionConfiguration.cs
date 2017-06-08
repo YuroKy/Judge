@@ -48,21 +48,22 @@ namespace Judge
             set { base["path"] = value; }
         }
 
-        /*OLD
         [ConfigurationProperty("type", DefaultValue = "", IsKey = false, IsRequired = false)]
         public string Type
         {
             get { return ((string)(base["type"])); }
             set { base["type"] = value; }
         }
-        */
-        [ConfigurationProperty("type", DefaultValue = LanguageType.interpreter, IsRequired = false)]
+        
+        /* ENUM
+        
+        [ConfigurationProperty("type", DefaultValue = LanguageType.interpreter, IsRequired = true)]
         public LanguageType Type
         {
             get{ return ((LanguageType)(base["type"])); }
             set { base["type"] = value; }
         }
-
+        */
         [ConfigurationProperty("args", DefaultValue = "", IsKey = false, IsRequired = false)]
         public string Args
         {

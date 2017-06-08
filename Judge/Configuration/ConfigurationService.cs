@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
+using System.Xml;
 
 namespace Judge
 {
@@ -23,11 +24,11 @@ namespace Judge
         */
 
         public Compiler GetCompilerByName(string compilerName)
-        {   
-                foreach (Compiler compiler in GetAvailableCompilers())
-                    if (compiler.GetName() == compilerName)
-                        return compiler;
-            
+        {
+            foreach (Compiler compiler in GetAvailableCompilers())
+                if (compiler.GetName() == compilerName)
+                    return compiler;
+
             return null;
         }
 
@@ -37,9 +38,10 @@ namespace Judge
             foreach (LanguageElement language in _languageSettings.LanguageItems)
             {
                 if (File.Exists(language.Path))
-                    compilers.Add(new Compiler(language.Name, language.Path, language.Args, language.Type));
+                    compilers.Add(new Compiler(language.Name, language.Path, language.Args, (language.Type == "compiler") ? LanguageType.сompiler : LanguageType.interpreter));
             }
             return compilers;
         }
+       
     }
 }
