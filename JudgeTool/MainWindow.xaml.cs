@@ -18,14 +18,13 @@ namespace JudgeTool
 
     public partial class MainWindow : Window
     {
-        public string root = "E:\\Judge\\";
         public JudgeProcess jp;
 
         public MainWindow()
         {
             InitializeComponent();
             choseList.SelectedIndex = 0;
-            jp = new JudgeProcess(root);
+            jp = new JudgeProcess(ConfigurationService.GetRoot());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

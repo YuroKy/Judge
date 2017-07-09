@@ -10,27 +10,13 @@ namespace Judge
     public class ConfigurationService
     {
         private NameValueCollection _appSettings = ConfigurationManager.AppSettings;
+        private StartupLanguageConfigSection _languageSettings = (StartupLanguageConfigSection)ConfigurationManager.GetSection("languageSettings");
 
-       private StartupLanguageConfigSection _languageSettings = (StartupLanguageConfigSection)ConfigurationManager.GetSection("languageSettings");
 
-        /*OLD
-        public Compiler GetCompilerByName(string compilerName)
-        {
-            foreach (LanguageElement language in _languageSettings.LanguageItems)
-                if (language.Name == compilerName)
-                    return new Compiler(language.Name, language.Path, language.Args, language.Type);
-
-            throw new ConfigurationErrorsException($"There is no difinition for {compilerName}");
-        }
-        */
 
         public Compiler GetCompilerByName(string compilerName)
         {
-            foreach (Compiler compiler in GetAvailableCompilers())
-                if (compiler.GetName() == compilerName)
-                    return compiler;
-
-            return null;
+            return GetAvailableCompilers().Find(c => c.GetName() == compilerName);
         }
 
         private List<Compiler> GetAvailableCompilers()
@@ -43,6 +29,11 @@ namespace Judge
             }
             return compilers;
         }
-       
+
+        public static string GetRoot()
+        {
+            return System.Configuration.ConfigurationManager.AppSettings["Root"];
+        }
+
     }
 }
