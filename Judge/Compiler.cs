@@ -41,7 +41,6 @@ namespace Judge
             compiler.StartInfo.UseShellExecute = false;
             compiler.StartInfo.Arguments = _command;
             compiler.Start();
-            //compiler.StandardInput.WriteLine(_command);
             string result = compiler.StandardOutput.ReadToEnd();
             compiler.WaitForExit();
             var exitCode = compiler.ExitCode;

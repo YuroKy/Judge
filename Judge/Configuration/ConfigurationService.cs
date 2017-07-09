@@ -10,7 +10,8 @@ namespace Judge
     public class ConfigurationService
     {
         private NameValueCollection _appSettings = ConfigurationManager.AppSettings;
-        private StartupLanguageConfigSection _languageSettings = (StartupLanguageConfigSection)ConfigurationManager.GetSection("languageSettings");
+
+       private StartupLanguageConfigSection _languageSettings = (StartupLanguageConfigSection)ConfigurationManager.GetSection("languageSettings");
 
         /*OLD
         public Compiler GetCompilerByName(string compilerName)

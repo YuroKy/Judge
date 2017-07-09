@@ -47,21 +47,25 @@ namespace Judge
             get { return ((string)(base["path"])); }
             set { base["path"] = value; }
         }
+      
+        //ENUM
+      [ConfigurationProperty("type", DefaultValue = "", IsKey = false, IsRequired = false)]
+      public string Type
+      {
+          get { return ((string)(base["type"])); }
+          set { base["type"] = value; }
+      }
 
-        [ConfigurationProperty("type", DefaultValue = "", IsKey = false, IsRequired = false)]
-        public string Type
-        {
-            get { return ((string)(base["type"])); }
-            set { base["type"] = value; }
-        }
-        
-        /* ENUM
-        
-        [ConfigurationProperty("type", DefaultValue = LanguageType.interpreter, IsRequired = true)]
+     
+         /*
+        [ConfigurationProperty("type2", DefaultValue = LanguageType.interpreter, IsRequired = true)]
         public LanguageType Type
         {
-            get{ return ((LanguageType)(base["type"])); }
-            set { base["type"] = value; }
+            get {
+                return LanguageType.interpreter;
+                //return (LanguageType)Enum.Parse(typeof(LanguageType), (string)base["type2"], true);
+            }
+            set { base["type2"] = value; }
         }
         */
         [ConfigurationProperty("args", DefaultValue = "", IsKey = false, IsRequired = false)]
@@ -70,13 +74,14 @@ namespace Judge
             get { return ((string)(base["args"])); }
             set { base["args"] = value; }
         }
+
         public override string ToString()
         {
             return String.Format("{0}:{1}:{2}:{3}", Name, Path, Type, Args);
         }
     }
 
-    public enum LanguageType 
+    public enum LanguageType
     {
         сompiler,
         interpreter

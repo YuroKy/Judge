@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Judge.Logger
@@ -27,8 +23,6 @@ namespace Judge.Logger
                                     string[] temp = lowerNode.Attributes[1].Value.ToString().Split('_', '.');
                                     lowerNode.Attributes[1].Value = temp[0] + "_" + (int.Parse(temp[1]) + 1).ToString() + ".txt";
                                     ConfigurationManager.RefreshSection("param");
-
-
                                 }
                             ConfigurationManager.RefreshSection("appender");
 

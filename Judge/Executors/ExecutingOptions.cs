@@ -7,10 +7,10 @@ namespace Judge.Executors
     {
         public TimeSpan TimeLimit { get; set; }
         public MemorySpan MemoryLimit { get; set; }
-        public ExecutingOptions(TimeSpan tl, MemorySpan ml)
+        public ExecutingOptions(TimeSpan timeLimit, MemorySpan memoryLimit)
         {
-            this.TimeLimit = tl;
-            this.MemoryLimit = ml;
+            this.TimeLimit = timeLimit;
+            this.MemoryLimit = memoryLimit;
         }
     }
 }

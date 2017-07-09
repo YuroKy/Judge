@@ -9,11 +9,11 @@ namespace Judge
         public MemorySpan Memory { get; private set; }
         public string Result { get; private set; }
         public string Verdict { get; set; }
-        public  int ExitCode { get; private set; }
-        public ExecutionOutput(TimeSpan time, long memory, string result, int exitCode)
+        public int ExitCode { get; private set; }
+        public ExecutionOutput(TimeSpan time, MemorySpan memory, string result, int exitCode)
         {
             this.Time = time;
-            this.Memory = new MemorySpan(memory);
+            this.Memory = memory;
             this.Result = result;
             this.ExitCode = exitCode;
         }

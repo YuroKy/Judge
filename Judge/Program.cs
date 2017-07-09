@@ -11,35 +11,21 @@ namespace Judge
     {
         public static void Main(string[] args)
         {
-            //TEST
-            string root = "E:\\Judge\\";
-            FileFactory factory = new FileFactory(root);
-            string code = File.ReadAllText(root + "sum.pas");
-            Submit submit = new Submit(code, "Pascal");
+            string code = "var a, b:integer; BEGIN readln(a, b); writeln(a + b); END.";
+            Problem problem = new Problem(new ExecutingOptions(new TimeSpan(0, 0, 0, 2, 0), new MemorySpan(10000000)));
+            problem.Tests.Add(new TestCase("5 5", "10"));
+            JudgeProcess jp = new JudgeProcess("E:\\Judge\\");
 
-            Problem sum = new Problem(new ExecutingOptions(TimeSpan.FromSeconds(5), new MemorySpan(256 * 1024 * 1024)));
-            sum.Tests = new List<TestCase> {
-                new TestCase("55555555555555555 5", "10"),
-                new TestCase("3 9", "12"),
-                new TestCase("3 6", "9"),
-                new TestCase("5 5", "10"),
-                new TestCase("3 9", "12"),
-                new TestCase("3 6", "9")
-            };
+            jp.Run(problem, new Submit(code, "Pascal"));
 
-    
-            IChecker checker = new StringChecker();
-            Judger judger = new Judger(factory,checker, sum, submit);
-            Protocol protocol = judger.Judge();
-
-            Console.WriteLine(protocol.CompilationResult.ExitCode);
-            Console.WriteLine(protocol.CompilationResult.Result);
-            
-
-            foreach (var result in protocol.Results.Values)
+            foreach (var protocol in jp.GetProtocolCurrentTest().Results)
             {
-                Console.WriteLine("Verdict:{0}\tMemory:{1}MB\tExecuting Time:{2}ms\tExitCode:{3}", result.Verdict,
-                    result.UsedMemory.TotalMegabytes, result.UsedTime.TotalSeconds, result.ExitCode);
+                Console.WriteLine(protocol.Value.Verdict);
+                Console.WriteLine(protocol.Value.UsedMemory.TotalKilobytes);
+                Console.WriteLine(protocol.Value.UsedTime.TotalMilliseconds);
+                Console.WriteLine(protocol.Value.ExitCode);
+                Console.WriteLine("==============================================");
+                
             }
         }
 

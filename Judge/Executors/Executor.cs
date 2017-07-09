@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Judge.Executors;
+using Judge.Models;
 
 namespace Judge
 {
@@ -16,12 +17,13 @@ namespace Judge
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
             long memory = 0;
+            Process solve = new Process();
 
             Task executing = new Task(() =>
             {
                 //Init 
 
-                Process solve = new Process();
+                
                 solve.StartInfo = new ProcessStartInfo(path);
                 solve.StartInfo.CreateNoWindow = true;
                 solve.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -39,14 +41,14 @@ namespace Judge
                 {
                     while (!token.IsCancellationRequested)
                     {
-                        memory = Math.Max(solve.PeakWorkingSet64, memory);
+                        memory = Math.Max(solve.WorkingSet64, memory);
                         Thread.Sleep(25);
                     }
                 });
                 memoryCheck.Start();
 
 
-
+                // Math.Max(0.5, TL*1.5)+0.5
 
                 // Input
                 solve.StandardInput.WriteLine(input);
@@ -63,19 +65,19 @@ namespace Judge
                 //Time
                 TimeSpan execitionTime = TimeSpan.FromMilliseconds((int)watch.Elapsed.TotalMilliseconds);
 
-                executionOutput = new ExecutionOutput(execitionTime, memory, result, exitCode);
+                executionOutput = new ExecutionOutput(execitionTime, new MemorySpan(memory), result, exitCode);
                 cancelTokenSource.Cancel();
             }, token);
             executing.Start();
 
             for (int i = 0; i < option.TimeLimit.Seconds; i++)
                 Thread.Sleep(100);
+
             if (!token.IsCancellationRequested)
             {
                 cancelTokenSource.Cancel();
-                foreach (var process in Process.GetProcessesByName("solve"))
-                    process.Kill();
-                executionOutput = new ExecutionOutput(TimeSpan.FromMilliseconds((int)watch.Elapsed.TotalMilliseconds), 5000, "TL", -1);
+                solve.Kill();
+                executionOutput = new ExecutionOutput(TimeSpan.FromMilliseconds((int)watch.Elapsed.TotalMilliseconds), new MemorySpan(-1), "TL", -1);
             }
             return executionOutput;
         }

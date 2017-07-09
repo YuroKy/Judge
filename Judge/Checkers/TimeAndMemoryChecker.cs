@@ -13,18 +13,18 @@ namespace Judge.Checkers
     {
         public TestVerdict CheckMemory(ExecutionOutput executionOutput, ExecutingOptions executingOptions)
         {
-            string verdict = "OK";
+            TypeVerdicts verdict = TypeVerdicts.OK;
             if (executionOutput.Memory.TotalKilobytes > executingOptions.MemoryLimit.TotalKilobytes)
-                verdict = "ML";
+                verdict = TypeVerdicts.MemoryLimit;
 
             return new TestVerdict(executionOutput.Memory, executionOutput.Time, executionOutput.ExitCode, verdict);
         }
 
         public TestVerdict CheckTime(ExecutionOutput executionOutput, ExecutingOptions executingOptions)
         {
-            string verdict = "OK";
+            TypeVerdicts verdict = TypeVerdicts.OK;
             if (executionOutput.Time.TotalMilliseconds < executingOptions.TimeLimit.TotalMilliseconds)
-                verdict = "TL";
+                verdict = TypeVerdicts.TimeLimit;
 
             return new TestVerdict(executionOutput.Memory, executionOutput.Time, executionOutput.ExitCode, verdict);
         }

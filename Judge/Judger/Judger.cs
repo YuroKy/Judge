@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Judge.Checkers;
 using Judge.Executors;
 using Judge.Models;
@@ -41,12 +40,12 @@ namespace Judge
 
                 var testVerdict = _limitChecker.CheckTime(executeOutput, _options);
                 testVerdict = _limitChecker.CheckMemory(executeOutput, _options);
-                if (testVerdict.Verdict == "OK")
+                if (testVerdict.Verdict == TypeVerdicts.OK)
                 {
                     if (_checker.Check(solve.Answer, executeOutput.Result))
-                        testVerdict.UpdateVerdict("OK");
+                        testVerdict.UpdateVerdict(TypeVerdicts.OK);
                     else
-                        testVerdict.UpdateVerdict("WA");
+                        testVerdict.UpdateVerdict(TypeVerdicts.WrongAnswer);
                 }
                 _protocol.Results.Add(solve, testVerdict);
 
@@ -59,6 +58,7 @@ namespace Judge
             builder.Create(_submit.SourceLanguage, _factory, _submit.SourceCode);
             _protocol.Submit = _submit;
             _protocol.CompilationResult = builder.CompilationResult;
+            
 
             if (_protocol.CompilationResult.ExitCode == 0)
                 Assessment(_protocol.CompilationResult.Result != "INTERPRETER" ? builder.Path + ".exe" : builder.Path, _problem, builder.GetExecuteConfiguration());

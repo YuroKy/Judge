@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B9FDA741-C126-48C0-9A1A-895AE000B054}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Judge</RootNamespace>
     <AssemblyName>Judge</AssemblyName>
@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Executors\ExecuteConfiguration.cs" />
+    <Compile Include="Judger\JudgeProcess.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\LogManager.cs" />
     <Compile Include="ProgramBuilder.cs" />
