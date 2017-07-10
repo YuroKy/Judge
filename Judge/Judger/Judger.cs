@@ -2,6 +2,7 @@
 using Judge.Checkers;
 using Judge.Executors;
 using Judge.Models;
+using Ninject;
 
 namespace Judge
 {
@@ -21,13 +22,13 @@ namespace Judge
         public string BuildedFileName { get; private set; }
 
 
-        public Judger(FileFactory factory, IChecker cheker, Problem problem, Submit submit)
+        public Judger(FileFactory factory, Problem problem, Submit submit)
         {
             _factory = factory;
-            _checker = cheker;
             _problem = problem;
             _options = problem.Options;
             _submit = submit;
+            _checker = JudgeProcess.ApprKernel.Get<IChecker>();
         }
 
         public void Assessment(string pathToSolve, Problem problem, ExecuteConfiguration configuration)

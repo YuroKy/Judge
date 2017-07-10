@@ -3,15 +3,19 @@ using System;
 using System.Collections.Generic;
 using Judge.Checkers;
 using Judge.Models;
+using Ninject;
+using Judge.IOC;
 
 namespace Judge
 {
     public class JudgeProcess
     {
-        private string _root; 
+        private string _root;
         private FileFactory _factory;
         private LogUpdater _logUpdater;
         private List<Protocol> _protocolList = new List<Protocol>();
+        public static IKernel ApprKernel = new StandardKernel(new CheckerNinjectModule(), new ExecutorNinjectModule());
+
 
         public JudgeProcess(string root)
         {
@@ -25,7 +29,7 @@ namespace Judge
             Logger.Logger.InitLogger();
             Logger.Logger.Log.Info(String.Format("Solve ID:{0}", _factory.GetId()));
 
-            Judger judger = new Judger(_factory, new StringChecker(), problem, submit);
+            Judger judger = new Judger(_factory, problem, submit);
             Protocol protocol = judger.Judge();
 
             Logger.Logger.Log.Info(String.Format("Sumbit Info\nLanguage:{0}\nSource code:{1}", protocol.Submit.SourceLanguage, protocol.Submit.SourceCode));

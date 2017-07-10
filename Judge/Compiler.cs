@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using Judge.Models;
+using Ninject;
+using Judge.IOC;
 
 namespace Judge
 {
@@ -9,8 +11,7 @@ namespace Judge
         private string _command;
         private string _name;
         public LanguageType Type { get; private set; }
-
-        Executor compiler = new Executor();
+        IExecutor compiler = JudgeProcess.ApprKernel.Get<IExecutor>();
 
         public Compiler(string name, string path, string command, LanguageType type)
         {
